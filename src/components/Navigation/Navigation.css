@@ -1,1 +1,25 @@
+.Navigation {
+    
+}
 
+.Navigation ul {
+    list-style: none;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 100%;
+}
+
+.Navigation li {
+    margin: 0 10px;
+    display: flex;
+    height: 100%;
+    width: auto;
+    align-items: center;
+}
+
+.Navigation li a {
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+}
