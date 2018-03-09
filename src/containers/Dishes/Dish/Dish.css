@@ -1,1 +1,30 @@
+.Dish {
+    margin: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
 
+.Main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.DishName {
+    text-transform: capitalize;
+}
+
+.Quantity {
+    display: flex;
+    align-items: center;
+}
+
+.Quantity p {
+    display: block;
+    width: 25px;
+    text-align: center;
+}
+
+.Desc {
+    margin-top: 5px;
+    font-size: 12px;
+}
