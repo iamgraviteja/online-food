@@ -1,1 +1,15 @@
+.Button {
+    outline: none;
+    border: none;
+    background-color: #ffffff;
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 10px 1px #ccc;
+    margin: 0 10px;
+    cursor: pointer;
+}
 
+.Button:disabled {
+    color: #cccccc;
+    cursor: not-allowed;
+}
