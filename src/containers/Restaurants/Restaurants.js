@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Restaurant from './Restaurant/Restaurant';
 import Aux from '../../hoc/Auxilary';
@@ -6,58 +7,23 @@ import Aux from '../../hoc/Auxilary';
 class Restaurants extends Component {
 
     state = {
-        restaurants: {
-            laComida: {
-                name: "La Comida",
-                rating: 4.3,
-                dishes: {
-                    pasta: {
-                        name: "Pasta",
-                        price: 100,
-                        quantity: 0
-                    },
-                    pizza: {
-                        name: "Pizza",
-                        price: 200,
-                        quantity: 0
-                    },
-                    dulces: {
-                        name: "Dulces",
-                        price: 300,
-                        quantity: 0
-                    }
-                }
-            },
-            laPastel: {
-                name: "La Pastel",
-                rating: 4,
-                dishes: {
-                    brownie: {
-                        name: "Brownie",
-                        price: 10,
-                        quantity: 0
-                    },
-                    cookies: {
-                        name: "Cookies",
-                        price: 15,
-                        quantity: 0
-                    },
-                    cake: {
-                        name: "Cake",
-                        price: 20,
-                        quantity: 0
-                    }
-                }
-            }
-        },
+        restaurants: null,
         activeRestaurant: null
     }
 
-    onDishAddHandler = () => {
-
+    componentDidMount() {
+        axios.get('https://react-order-food.firebaseio.com/restaurants.json')
+            .then(response => {
+                console.log(response);
+                this.setState({ restaurants: response.data })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
-    onDishRemoveHandler = () => {
-
+    selectRestHandler = (id) => {
+        console.log(id);
+        this.props.history.push({ pathname: '/orders' });
     }
 
     render() {
@@ -69,16 +35,24 @@ class Restaurants extends Component {
                 details: this.state.restaurants[key]
             });
         }
+        let restaurants = (
+            restaurantsArray.map(restaurant => {
+                return <Restaurant
+                    key={restaurant.id}
+                    name={restaurant.details.name}
+                    rating={restaurant.details.rating}
+                    minOrder={restaurant.details.minOrder}
+                    clicked={() => this.selectRestHandler(restaurant.id)}
+                />
+            })
+        );
+        if (!this.state.restaurants) {
+            restaurants = <p>Loading...</p>
+        }
+
         return (
             <Aux>
-                {restaurantsArray.map(restaurant => {
-                    return <Restaurant
-                        key={restaurant.id}
-                        name={restaurant.details.name}
-                        rating={restaurant.details.rating}
-                        dishes={restaurant.details.dishes}                       
-                    />
-                })}
+                {restaurants}
             </Aux>
         );
     }
