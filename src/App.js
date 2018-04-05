@@ -13,10 +13,10 @@ class App extends Component {
     return (
       <Aux>
         <Layout />
-        <main style={{ marginTop: '70px', overflowY: 'auto' }}>
+        <main style={{ marginTop: '50px', overflowY: 'auto' }}>
           <Switch>
             <Route path="/orders" component={Orders} />
-            <Route path="/dishes" component={Dishes} />
+            <Route path="/dishes/:id"  component={Dishes} />
             <Route path="/" exact component={Restaurants} />
             <Redirect to="/" />
           </Switch>
