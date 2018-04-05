@@ -1,12 +1,11 @@
 .Restaurant {
-    width: 80%;
-    /* height: 300px; */
-    box-shadow: 0px 2px 20px 0px #cccccc;
+    box-shadow: 0 0 10px 0 #cccccc;
     margin: 0 auto;
     display: flex;
     margin-bottom: 10px;
     box-sizing: border-box;
     transition: all 0.3s ease-in;
+    cursor: pointer;
 }
 
 .RestaurantDetails {
@@ -35,5 +34,4 @@
 
 .RestaurantImg img {
     width: 100%;
-    /* height: 100%; */
 }
