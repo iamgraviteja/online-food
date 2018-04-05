@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 
 import Navigation from '../../components/Navigation/Navigation';
-import Cart from '../../components/UI/Cart/Cart';
 import classes from './Layout.css';
 
 class Layout extends Component {
@@ -10,7 +9,6 @@ class Layout extends Component {
         return (
             <header className={classes.Layout}>
                 <Navigation />
-                <Cart />
             </header>
         );
     };
