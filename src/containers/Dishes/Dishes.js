@@ -1,45 +1,57 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import Dish from './Dish/Dish';
 import Aux from '../../hoc/Auxilary';
+import classes from './Dishes.css';
+import Image from '../../assets/shopping-purse-icon.png';
 
 class Dishes extends Component {
     state = {
-        dishes: null,
+        dishes: {
+            dish1: {
+                name: "pasta",
+                price: 50,
+                count: 0
+            },
+            dish2: {
+                name: "pizza",
+                price: 80,
+                count: 0
+            },
+            dish3: {
+                name: "burger",
+                price: 20,
+                count: 0
+            }
+        },
+        dishCount: 0,
         total: 0
     }
     componentDidMount() {
-        axios.get('https://react-order-food.firebaseio.com/dishes.json/101')
-            .then(response => {
-                console.log(response);
-                this.setState({ dishes: response.data })
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-    addDishHandler = (index) => {
 
-        //Need to change later
-        let updatedDishes = [...this.state.dishes];
-        updatedDishes[index].count = this.state.dishes[index].count + 1;
+    }
+    addDishHandler = (id) => {
+        let dishes = { ...this.state.dishes };
+        let updatedDish = { ...dishes[id] };
+        updatedDish.count = this.state.dishes[id].count + 1;
+        let updatedDishes = { ...this.state.dishes, [id]: updatedDish }
 
         this.setState({
             dishes: updatedDishes,
-            total: this.state.total + updatedDishes[index].price,
+            total: this.state.total + updatedDish.price,
             dishCount: this.state.dishCount + 1
         })
     }
 
-    removeDishHandler = (index) => {
-        //Need to change later
-        let updatedDishes = [...this.state.dishes];
-        updatedDishes[index].count = this.state.dishes[index].count - 1;
+    removeDishHandler = (id) => {       
+        let dishes = { ...this.state.dishes };
+        let updatedDish = { ...dishes[id] };
+        updatedDish.count = this.state.dishes[id].count - 1;
+        let updatedDishes = { ...this.state.dishes, [id]: updatedDish }
 
         this.setState({
             dishes: updatedDishes,
-            total: this.state.total - updatedDishes[index].price,
+            total: this.state.total - updatedDish.price,
             dishCount: this.state.dishCount - 1
         })
 
@@ -54,30 +66,35 @@ class Dishes extends Component {
                 details: this.state.dishes[key]
             });
         }
-        let dishes = <p>Loading....</p>;
 
-        if (this.state.dishes) {
-            dishes = (
-                <div>
-                    {dishesArray.map((dish, index) => {
-                        return <Dish
-                            name={dish.details.name}
-                            price={dish.details.price}
-                            key={dish.id}
-                        // addDish={() => this.addDishHandler(index)}
-                        // removeDish={() => this.removeDishHandler(index)}
-                        />
-                    })}
+        const dishCounter = <div className={classes.BagCounter}>{this.state.dishCount}</div>;             
 
-                    <p style={{ display: this.state.total > 0 ? 'block' : 'none' }}>Total: <strong>${this.state.total}</strong></p>
-                    <p>Dish count: {this.state.dishCount}</p>
-                </div>
-            );
-        }
         return (
             <Aux>
-                {dishes}
+                <div className={classes.Dishes}>
+                    {
+                        dishesArray.map(dish => {
+                            return <Dish
+                                key={dish.id}
+                                name={dish.details.name}
+                                price={dish.details.price}
+                                quantity={dish.details.count}
+                                addDish={() => this.addDishHandler(dish.id)}
+                                removeDish={() => this.removeDishHandler(dish.id)}
+                            />
+                        })
+                    }
+                    <div>
+                        Total: ${this.state.total}
+                    </div>
+                    <div className={classes.Bag}>
+                        {this.state.dishCount > 0 ? dishCounter : null}
+                        <img src={Image} alt='cart' height="20" width="20" />
+                    </div>
+                </div>
+
             </Aux>
+
         );
     }
 };
