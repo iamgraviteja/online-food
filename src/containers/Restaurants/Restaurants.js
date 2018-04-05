@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Restaurant from './Restaurant/Restaurant';
 import Aux from '../../hoc/Auxilary';
+import classes from './Restaurants.css';
 
 class Restaurants extends Component {
 
@@ -14,7 +15,6 @@ class Restaurants extends Component {
     componentDidMount() {
         axios.get('https://react-order-food.firebaseio.com/restaurants.json')
             .then(response => {
-                console.log(response);
                 this.setState({ restaurants: response.data })
             })
             .catch(function (error) {
@@ -22,8 +22,7 @@ class Restaurants extends Component {
             });
     }
     selectRestHandler = (id) => {
-        console.log(id);
-        this.props.history.push({ pathname: '/orders' });
+        this.props.history.push({ pathname: '/dishes/' + id });
     }
 
     render() {
@@ -37,13 +36,16 @@ class Restaurants extends Component {
         }
         let restaurants = (
             restaurantsArray.map(restaurant => {
-                return <Restaurant
-                    key={restaurant.id}
-                    name={restaurant.details.name}
-                    rating={restaurant.details.rating}
-                    minOrder={restaurant.details.minOrder}
-                    clicked={() => this.selectRestHandler(restaurant.id)}
-                />
+                return (
+                    <Restaurant
+                        key={restaurant.id}
+                        name={restaurant.details.name}
+                        rating={restaurant.details.rating}
+                        minOrder={restaurant.details.minOrder}
+                        clicked={() => this.selectRestHandler(restaurant.id)}
+                    />
+
+                );
             })
         );
         if (!this.state.restaurants) {
@@ -52,7 +54,9 @@ class Restaurants extends Component {
 
         return (
             <Aux>
-                {restaurants}
+                <div className={classes.Restaurants}>
+                    {restaurants}
+                </div>
             </Aux>
         );
     }
