@@ -1,0 +1,43 @@
+.Modal {
+    background: #FFFFFF;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    padding: 10px;
+    z-index: 101;
+    transform: scale(0) translate(80%, 80%);
+    transform-origin: bottom right;
+    transition: all 0.3s ease-out;
+    animation: cart-anim 300ms forwards;
+}
+
+@keyframes cart-anim {
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+.Backdrop {
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.Close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 30px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-left: auto;
+    cursor: pointer;
+}
